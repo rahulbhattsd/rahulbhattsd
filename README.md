@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @rahulbhattsd
 - 👀 I’m interested in coding
 - 🌱 I’m currently learning DSA
-- 💞️ I’m looking to collaborate on Hackyhon
+- 💞️ I’m looking to collaborate on Hackython
 - 📫 How to reach me linkedin.com/in/rahul-bhatt-701051252
 - ⚡ Fun fact: You Can't see me.
 
