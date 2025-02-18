@@ -1,6 +1,9 @@
 
-<h1> <span width="300px"></span>                                           Hi 👋, I'm Rahul Bhatt                          </h1>
-<p>A passionate full stack developer 
+<div align="center">
+  <h1>Hi 👋, I'm Rahul Bhatt</h1>
+</div>
+
+<p>A passionate full stack developer <br>
   - 🔭 I’m currently working on exciting projects and learning new technologies. <br>
   - 🌱 I’m currently diving into Data Structures & Algorithms (DSA). <br>
   - 💞️ I’m looking to collaborate on projects like **Hackython**. <br>
