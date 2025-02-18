@@ -5,7 +5,10 @@
   - 🌱 I’m currently diving into Data Structures & Algorithms (DSA). 
   - 💞️ I’m looking to collaborate on projects like **Hackython**. 
   - ⚡ Fun Fact: You Can't see me! 😜</p>
-  ![coder](https://github.com/user-attachments/assets/f4ec9cdd-500c-4d25-8703-ac4beeb16360)
+  <a target="_blank" href="https://github-production-user-asset-6210df.s3.amazonaws.com/145220585/414091430-f4ec9cdd-500c-4d25-8703-ac4beeb16360.gif" style="display: inline-block;">
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/145220585/414091430-f4ec9cdd-500c-4d25-8703-ac4beeb16360.gif" alt="GIF" width="42" height="42" />
+</a>
+
 
 <h2>🚀 Languages and Tools I Use</h2>
 <p><a target="_blank" href="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" style="display: inline-block;"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="42" height="42" /></a>
