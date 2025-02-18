@@ -6,7 +6,7 @@
 <p>A passionate full stack developer <br>
   - 🔭 I’m currently working on exciting projects and learning new technologies. <br>
   - 🌱 I’m currently diving into Data Structures & Algorithms (DSA). <br>
-  - 💞️ I’m looking to collaborate on projects like **Hackython**. <br>
+  - 💞️ I’m looking to collaborate on Hackathon. <br>
   - ⚡ Fun Fact: You Can't see me! 😜</p>
  <a target="_blank" href="https://github-production-user-asset-6210df.s3.amazonaws.com/145220585/414091430-f4ec9cdd-500c-4d25-8703-ac4beeb16360.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250218T042745Z&X-Amz-Expires=300&X-Amz-Signature=016d846e462d5e667efb5a24bb455fa1272b644c08889126e6a768bcff42bd60&X-Amz-SignedHeaders=host" style="display: inline-block;">
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/145220585/414091430-f4ec9cdd-500c-4d25-8703-ac4beeb16360.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250218T042745Z&X-Amz-Expires=300&X-Amz-Signature=016d846e462d5e667efb5a24bb455fa1272b644c08889126e6a768bcff42bd60&X-Amz-SignedHeaders=host" alt="GIF" width="90" height="100" />
@@ -37,5 +37,10 @@
   <img src="https://e7.pngegg.com/pngimages/646/751/png-clipart-the-c-programming-language-computer-programming-programmer-others-blue-class.png" alt="C Programming" width="42" height="42" />
 </a>
 <h2>⚡️ Where to find me</h2>
-<p><a target="_blank" href="https://www.linkedin.com/in/https://www.linkedin.com/in/rahul-bhatt-701051252/" style="display: inline-block;"><img src="https://img.shields.io/badge/linkedin-logo?style=for-the-badge&logo=linkedin&logoColor=white&color=%230a77b6" alt="linkedin" /></a></p>
+<p>
+  <a target="_blank" href="https://www.linkedin.com/in/rahul-bhatt-701051252/" style="display: inline-block;">
+    <img src="https://logosmarcas.net/wp-content/uploads/2020/03/LinkedIn-Emblema.png" alt="LinkedIn" width="62" height="42" />
+  </a>
+</p>
+
 
