@@ -3,7 +3,7 @@
   <h1>Hi 👋, I'm Rahul Bhatt</h1>
 </div>
 
-<p>A passionate full stack developer to see my projects please visit http://portfolio-rahul-bhatts-projects-0b2a033c.vercel.app <br>
+<p>A passionate full stack developer ,To see my projects please visit https://portfolio-7y3ryfduo-rahul-bhatts-projects-0b2a033c.vercel.app <br>
   - 🔭 I’m currently working on exciting projects and learning new technologies. <br>
   - 🌱 I’m currently diving into Data Structures & Algorithms (DSA). <br>
   - 💞️ I’m looking to collaborate on Hackathon. <br>
