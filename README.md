@@ -5,7 +5,8 @@
 
 <p>A passionate full stack developer ,<h2>To See Project: Visit My Portfolio click 👇</h2>
 <a target="_blank" href="https://portfolio-z6tj.onrender.com/">
- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmEEw12ehjg103P5Me-w6wCDHoGtXcTCO8Ig&s" alt="Portfolio Image" height="200" width="600" style="margin-left: 400;" />
+ <img width="600" height="150" alt="image" src="https://github.com/user-attachments/assets/e458ea6c-6609-4518-b279-1b5a4b9565e7" />
+
 </a>
  <br>
   - 🔭 I’m currently working on exciting projects and learning new technologies. <br>
