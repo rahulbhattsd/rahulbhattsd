@@ -5,7 +5,8 @@
 
 <p>A passionate full stack developer ,<h2>To See Project: Visit My Portfolio click 👇</h2>
 <a target="_blank" href="https://portfolio-z6tj.onrender.com/">
- <img width="600" height="150" alt="image" src="https://github.com/user-attachments/assets/e458ea6c-6609-4518-b279-1b5a4b9565e7" />
+ <img width="600" height="600" alt="ChatGPT Image Mar 27, 2026, 09_55_02 PM" src="https://github.com/user-attachments/assets/6e208e42-6374-4107-ae5a-a3596bd3c851" />
+
 
 </a>
  <br>
