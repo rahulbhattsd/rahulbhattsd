@@ -1,4 +1,3 @@
-
 <h1 align="center">Rahul Bhatt</h1>
 <h3 align="center">Full Stack Developer | MERN Stack | Problem Solver</h3>
 
@@ -65,7 +64,7 @@
 
 ---
 
-## 📌 What I’m Working On
+## 📌 What I'm Working On
 
 - 🚀 Building full-stack scalable applications  
 - 📚 Mastering **DSA for top tech interviews**  
@@ -73,7 +72,15 @@
 
 ---
 
+## 🐍 My Contributions Snake
 
+<div align="center">
+  
+  <img src="https://raw.githubusercontent.com/rahulbhattsd/rahulbhattsd/output/snake.svg" alt="Snake animation showing contribution graph eating up dots" />
+  
+</div>
+
+---
 
 ## 🤝 Connect With Me
 
@@ -87,9 +94,6 @@
 
 ## ⚡ Mindset
 
-> I don’t just build projects — I build systems that solve real problems.
+> I don't just build projects — I build systems that solve real problems.
 
 ---
-
-
-
