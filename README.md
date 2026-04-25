@@ -72,24 +72,24 @@
 
 ---
 
-## 🐍 My Contributions Snake 
+## 📊 GitHub Stats
 
 <div align="center">
-  
-  [![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=rahulbhattsd&theme=radical)](https://git.io/streak-stats)
-  
+
+  ![](https://github-readme-stats.vercel.app/api?username=rahulbhattsd&theme=transparent&hide_border=false&include_all_commits=true&count_private=true)<br/>
+  ![](https://nirzak-streak-stats.vercel.app/?user=rahulbhattsd&theme=transparent&hide_border=false)<br/>
+  ![](https://github-readme-stats.vercel.app/api/top-langs/?username=rahulbhattsd&theme=transparent&hide_border=false&layout=compact)
+
 </div>
 
 ---
 
-## 📊 GitHub Stats
+## 🐍 My Contributions Snake
 
 <div align="center">
-  
-  ![Rahul's GitHub Stats](https://github-readme-stats.vercel.app/api?username=rahulbhattsd&theme=radical&hide_border=true&show_icons=true)
-  
-  ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=rahulbhattsd&theme=radical&hide_border=true&layout=compact)
-  
+
+  <img src="https://raw.githubusercontent.com/rahulbhattsd/rahulbhattsd/output/snake.svg" alt="Snake animation showing contribution graph eating up dots" />
+
 </div>
 
 ---
