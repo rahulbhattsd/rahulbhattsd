@@ -72,11 +72,23 @@
 
 ---
 
-## 🐍 My Contributions Snake
+## 🐍 My Contributions Snake 
 
 <div align="center">
   
-  <img src="https://raw.githubusercontent.com/rahulbhattsd/rahulbhattsd/output/snake.svg" alt="Snake animation showing contribution graph eating up dots" />
+  [![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=rahulbhattsd&theme=radical)](https://git.io/streak-stats)
+  
+</div>
+
+---
+
+## 📊 GitHub Stats
+
+<div align="center">
+  
+  ![Rahul's GitHub Stats](https://github-readme-stats.vercel.app/api?username=rahulbhattsd&theme=radical&hide_border=true&show_icons=true)
+  
+  ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=rahulbhattsd&theme=radical&hide_border=true&layout=compact)
   
 </div>
 
