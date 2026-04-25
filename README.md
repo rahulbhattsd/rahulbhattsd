@@ -76,9 +76,8 @@
 
 <div align="center">
 
-  ![](https://github-readme-stats.vercel.app/api?username=rahulbhattsd&theme=transparent&hide_border=false&include_all_commits=true&count_private=true)<br/>
-  ![](https://nirzak-streak-stats.vercel.app/?user=rahulbhattsd&theme=transparent&hide_border=false)<br/>
-  ![](https://github-readme-stats.vercel.app/api/top-langs/?username=rahulbhattsd&theme=transparent&hide_border=false&layout=compact)
+  ![](https://github-readme-stats.vercel.app/api?username=rahulbhattsd&theme=transparent&hide_border=false&show_icons=true&hide=prs,issues,contribs)<br/>
+  ![](https://nirzak-streak-stats.vercel.app/?user=rahulbhattsd&theme=transparent&hide_border=false)
 
 </div>
 
