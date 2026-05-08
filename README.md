@@ -20,13 +20,13 @@
 ## 🌐 Portfolio
 
 <p align="center">
-  <a href="https://portfolio-z6tj.onrender.com/" target="_blank">
+  <a href="https://rahulbhattsd.github.io/rahul-portfolio/" target="_blank">
     <img src="https://github.com/user-attachments/assets/6e208e42-6374-4107-ae5a-a3596bd3c851" width="150"/>
   </a>
 </p>
 
 <p align="center">
-  🔗 <b>Live Portfolio:</b> https://portfolio-z6tj.onrender.com/
+  🔗 <b>Live Portfolio:</b> https://rahulbhattsd.github.io/rahul-portfolio
 </p>
 
 ---
