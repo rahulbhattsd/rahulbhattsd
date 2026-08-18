@@ -6,8 +6,8 @@
   Generates dist/snake.svg based on the GitHub contribution grid for the repository owner.
   - Fetches contribution calendar via GraphQL (contributionsCollection.contributionCalendar)
   - Builds the grid (7 rows, N weeks)
-  - Occupied cell = contributionCount > 0
-  - Uses A* pathfinding with heavy penalty for occupied cells and small penalty for turns
+  - Occupied cell = contributionCount > 0 (treated as IMPASSABLE)
+  - Uses A* pathfinding that completely rejects occupied cells
   - Builds a smooth path and emits an animated SVG to dist/snake.svg
 */
 
@@ -54,6 +54,7 @@ async function run() {
         if (!day) continue;
         const occupied = (day.contributionCount || 0) > 0 ? 1 : 0;
         grid[y][x] = occupied;
+        // Keep original colors exactly as returned by the API
         colorGrid[y][x] = day.color || (occupied ? '#0e4429' : '#ebedf0');
         dateGrid[y][x] = day.date;
       }
@@ -67,8 +68,7 @@ async function run() {
     const height = padding * 2 + rows * cellSize + (rows - 1) * gap;
     const totalCells = rows * cols;
 
-    // Pathfinding params
-    const occupiedCost = 10000; // very high cost to avoid occupied cells
+    // Pathfinding params (occupied cells are IMPASSABLE; no occupiedCost used)
     const emptyCost = 1;
     const turnPenalty = 0.5; // small penalty to encourage straighter paths
 
@@ -89,15 +89,21 @@ async function run() {
 
     console.log(`Start cell chosen at r=${start.r}, c=${start.c}`);
 
-    // Greedily build path by selecting successive farthest empty waypoints and connecting with A*
+    // Build path: only traverse cells where grid[row][col] === 0. If targetLength can't be reached, return the longest valid path of empty cells.
     const pathCells = await buildSnakePath(grid, rows, cols, start, targetLength, {
-      occupiedCost,
       emptyCost,
       turnPenalty
     });
 
     if (!pathCells || pathCells.length < 2) {
-      throw new Error('Pathfinding failed to produce a usable path.');
+      throw new Error('Pathfinding failed to produce a usable path. Not enough empty cells or disconnected empty regions.');
+    }
+
+    // Final validation: ensure every cell in pathCells is empty
+    for (const [r, c] of pathCells) {
+      if (grid[r][c] !== 0) {
+        throw new Error(`Path contains occupied cell at r=${r}, c=${c} — aborting SVG generation.`);
+      }
     }
 
     console.log(`Computed path length: ${pathCells.length} cells`);
@@ -198,15 +204,13 @@ function findStartCell(grid, rows, cols) {
       if (grid[r][c] === 0) return { r, c };
     }
   }
-  // fallback to any cell
-  for (let c = 0; c < cols; c++) for (let r = 0; r < rows; r++) if (grid[r][c] >= 0) return { r, c };
   return null;
 }
 
 async function buildSnakePath(grid, rows, cols, start, targetLength, costs) {
   // Strategy:
   // - Maintain visited set
-  // - From current position, find farthest empty cell (Manhattan) not visited that yields a valid A* path
+  // - From current position, find farthest empty cell (Manhattan) not visited that yields a valid A* path (which will never traverse occupied cells)
   // - Append path segment (excluding the starting duplicate)
   // - Stop when targetLength reached or cannot extend further
   const visited = new Set();
@@ -223,11 +227,10 @@ async function buildSnakePath(grid, rows, cols, start, targetLength, costs) {
     }
   }
 
-  // If few empty cells, allow going through occupied cells if required
   const maxAttempts = 500;
 
   while (path.length < targetLength && attemptsWithoutProgress < maxAttempts) {
-    // pick candidate farthest empty cell by Manhattan distance from current, that is not the current cell
+    // pick candidate farthest empty cell by Manhattan distance from current, that is not the current cell and not visited
     let candidate = null;
     let bestDist = -1;
     for (const [r, c] of emptyCells) {
@@ -239,28 +242,15 @@ async function buildSnakePath(grid, rows, cols, start, targetLength, costs) {
         candidate = { r, c };
       }
     }
-    // If no empty candidate left, attempt to pick any not-visited cell (including occupied)
-    if (!candidate) {
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const key = `${r},${c}`;
-          if (visited.has(key)) continue;
-          const dist = Math.abs(r - current.r) + Math.abs(c - current.c);
-          if (dist > bestDist) {
-            bestDist = dist;
-            candidate = { r, c };
-          }
-        }
-      }
-      if (!candidate) break;
-    }
 
-    // Run A* from current to candidate
+    // If no empty candidate left, we cannot extend the snake further without touching occupied cells
+    if (!candidate) break;
+
+    // Run A* from current to candidate (A* rejects occupied cells)
     const segment = aStar(grid, rows, cols, current, candidate, costs);
     if (!segment || segment.length === 0) {
       // can't reach candidate; mark as visited to avoid trying again
       attemptsWithoutProgress++;
-      // mark candidate as visited to skip next time
       const key = `${candidate.r},${candidate.c}`;
       visited.add(key);
       continue;
@@ -271,6 +261,11 @@ async function buildSnakePath(grid, rows, cols, start, targetLength, costs) {
       const [r, c] = segment[i];
       const key = `${r},${c}`;
       if (!visited.has(key)) {
+        // safety: only append empty cells
+        if (grid[r][c] !== 0) {
+          // This should not happen because aStar never traverses occupied cells, but guard anyway
+          continue;
+        }
         path.push([r, c]);
         visited.add(key);
       }
@@ -280,33 +275,7 @@ async function buildSnakePath(grid, rows, cols, start, targetLength, costs) {
     attemptsWithoutProgress = 0;
   }
 
-  // If still too short, try a fallback spanning towards some other cells
-  if (path.length < Math.max(6, Math.floor(targetLength * 0.66))) {
-    console.log('Path shorter than desired; attempting greedy walk to fill length.');
-    // greedy walk: try neighbours to extend
-    let cur = { r: path[path.length - 1][0], c: path[path.length - 1][1] };
-    let loopGuard = 0;
-    while (path.length < targetLength && loopGuard++ < 1000) {
-      const neighbors = neighborsList(cur.r, cur.c, rows, cols);
-      // pick the neighbor with lowest cost not already in path
-      neighbors.sort((a, b) => {
-        const costA = grid[a[0]][a[1]] === 0 ? costs.emptyCost : costs.occupiedCost;
-        const costB = grid[b[0]][b[1]] === 0 ? costs.emptyCost : costs.occupiedCost;
-        return costA - costB;
-      });
-      let added = false;
-      for (const [nr, nc] of neighbors) {
-        const key = `${nr},${nc}`;
-        if (path.find(p => p[0] === nr && p[1] === nc)) continue;
-        path.push([nr, nc]);
-        added = true;
-        cur = { r: nr, c: nc };
-        break;
-      }
-      if (!added) break;
-    }
-  }
-
+  // Return the longest valid path consisting ONLY of empty cells (may be shorter than targetLength)
   return path;
 }
 
@@ -358,8 +327,11 @@ function aStar(grid, rows, cols, start, goal, costs) {
       const nr = current.r + dirs[d][0];
       const nc = current.c + dirs[d][1];
       if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
-      const occupied = grid[nr][nc] > 0;
-      const base = occupied ? costs.occupiedCost : costs.emptyCost;
+
+      // Reject occupied cells completely
+      if (grid[nr][nc] > 0) continue;
+
+      const base = costs.emptyCost;
       let tentativeG = (gScore.get(curKey) || Infinity) + base;
 
       // turn penalty
@@ -547,15 +519,12 @@ function buildSVG(opts) {
   `;
 
   // Snake body animation: use stroke-dasharray to make a traveling dash look
-  // Compute dash length heuristically relative to path length; but path length isn't known without DOM.
-  // We'll use a repeating dash pattern and animate dashoffset to create motion illusion.
   const bodyAnim = `
     <animate xlink:href="#${pathId}" attributeName="stroke-dashoffset" from="0" to="-200" dur="${dur}s" repeatCount="indefinite" />
     <animate xlink:href="#${pathId}-bg" attributeName="stroke-dashoffset" from="0" to="-200" dur="${dur}s" repeatCount="indefinite" />
   `;
 
   // Combine everything. Draw path first (so it's behind cells) to ensure contribution squares remain fully visible.
-  // Then draw path top overlay head (subtle) if desired. To keep contribution colors visible, main stroke uses semi-opaque color and is relatively narrow.
   const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Animated snake moving through my GitHub contribution graph">
   <title>Snake animation over contribution graph</title>
