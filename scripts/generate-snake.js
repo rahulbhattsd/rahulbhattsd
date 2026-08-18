@@ -89,21 +89,34 @@ async function run() {
 
     console.log(`Start cell chosen at r=${start.r}, c=${start.c}`);
 
-    // Build path: only traverse cells where grid[row][col] === 0. If targetLength can't be reached, return the longest valid path of empty cells.
+    // Build the path using empty cells only
     const pathCells = await buildSnakePath(grid, rows, cols, start, targetLength, {
       emptyCost,
       turnPenalty
     });
 
-    if (!pathCells || pathCells.length < 2) {
-      throw new Error('Pathfinding failed to produce a usable path. Not enough empty cells or disconnected empty regions.');
+    // If buildSnakePath couldn't produce any cell, fail.
+    if (!pathCells || pathCells.length === 0) {
+      throw new Error('Pathfinding failed to produce any path. Not enough empty cells or disconnected empty regions.');
     }
 
-    // Final validation: ensure every cell in pathCells is empty
-    const invalidCells = pathCells.filter(([r, c]) => grid[r][c] !== 0);
+    // If shorter than the requested target, accept it and log that we shortened the snake.
+    if (pathCells.length < targetLength) {
+      console.log(`Note: target length ${targetLength} unreachable; using shorter snake of length ${pathCells.length}.`);
+    }
+
+    // Final, defensive validation: every path coordinate must be a number, inside the grid, and refer to an empty cell.
+    const invalidCells = pathCells.filter(([r, c]) => {
+      if (typeof r !== 'number' || typeof c !== 'number') return true;
+      if (r < 0 || r >= rows || c < 0 || c >= cols) return true;
+      return grid[r][c] !== 0;
+    });
+
     console.log(`Snake validation: ${invalidCells.length} occupied cells in path`);
+
     if (invalidCells.length > 0) {
       console.error('   ❌ Snake path contains occupied contribution cells. Aborting SVG generation.');
+      console.error('Invalid path coordinates (sample):', invalidCells.slice(0, 20));
       process.exit(1);
     }
 
@@ -521,7 +534,7 @@ function buildSVG(opts) {
   const pathBg = `<path id="${pathId}-bg" d="${pathD}" fill="none" stroke="#2b2b2b" stroke-opacity="0.18" stroke-width="${snakeStrokeWidth + 6}" stroke-linecap="round" stroke-linejoin="round"/>`;
 
   // Main path
-  const pathMain = `<path id="${pathId}" d="${pathD}" fill="none" stroke="${snakeColor}" stroke-width="${snakeStrokeWidth}" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.95"/>`;
+  const pathMain = `<path id="${pathId}" d="${pathD}" fill="none" stroke="${snakeColor}" stroke-width="${snakeStrokeWidth}" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.95"/>`[...]
 
   // Head circle that follows the path using animateMotion
   const head = `
