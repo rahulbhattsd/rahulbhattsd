@@ -26,10 +26,6 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install dependencies (if any)
-        run: |
-          if [ -f package.json ]; then npm ci; fi
-
       - name: Generate snake SVG
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
