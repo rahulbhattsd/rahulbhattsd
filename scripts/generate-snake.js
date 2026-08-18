@@ -100,10 +100,11 @@ async function run() {
     }
 
     // Final validation: ensure every cell in pathCells is empty
-    for (const [r, c] of pathCells) {
-      if (grid[r][c] !== 0) {
-        throw new Error(`Path contains occupied cell at r=${r}, c=${c} — aborting SVG generation.`);
-      }
+    const invalidCells = pathCells.filter(([r, c]) => grid[r][c] !== 0);
+    console.log(`Snake validation: ${invalidCells.length} occupied cells in path`);
+    if (invalidCells.length > 0) {
+      console.error('   ❌ Snake path contains occupied contribution cells. Aborting SVG generation.');
+      process.exit(1);
     }
 
     console.log(`Computed path length: ${pathCells.length} cells`);
@@ -133,6 +134,7 @@ async function run() {
       cols,
       cellSize,
       gap,
+      grid,
       colorGrid,
       dateGrid,
       pathD,
@@ -458,6 +460,7 @@ function buildSVG(opts) {
     cols,
     cellSize,
     gap,
+    grid,
     colorGrid,
     dateGrid,
     pathD,
@@ -478,6 +481,19 @@ function buildSVG(opts) {
   const totalHeight = height;
   const left = 0;
   const top = 0;
+
+  // Build mask that exposes only empty cells — this ensures the snake (path and head) is visible only inside empty cells
+  let maskDefs = `<mask id="emptyMask">\n  <rect x="0" y="0" width="${width}" height="${height}" fill="black"/>\n`;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === 0) {
+        const x = left + padding + c * (cellSize + gap);
+        const y = top + padding + r * (cellSize + gap);
+        maskDefs += `  <rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" fill="white" rx="3" ry="3"/>\n`;
+      }
+    }
+  }
+  maskDefs += `</mask>`;
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -511,7 +527,7 @@ function buildSVG(opts) {
   const head = `
     <g id="snakeHead" transform="translate(0,0)">
       <circle r="${snakeStrokeWidth/2}" fill="#ff6b6b" stroke="#fff" stroke-width="1" />
-      <circle r="${Math.max(1, Math.round(snakeStrokeWidth/6))}" cx="${snakeStrokeWidth/3}" cy="${-snakeStrokeWidth/3}" fill="#fff" opacity="0.9" />
+      <circle r="${Math.max(1, Math.round(snakeStrokeWidth/6))}" cx="${snakeStrokeWidth/3}" cy="-${snakeStrokeWidth/3}" fill="#fff" opacity="0.9" />
     </g>
     <animateMotion xlink:href="#snakeHead" dur="${dur}s" repeatCount="indefinite">
       <mpath xlink:href="#${pathId}" />
@@ -529,7 +545,10 @@ function buildSVG(opts) {
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Animated snake moving through my GitHub contribution graph">
   <title>Snake animation over contribution graph</title>
   ${bgRect}
-  <g id="snakeLayer" transform="translate(0,0)">
+  <defs>
+    ${maskDefs}
+  </defs>
+  <g id="snakeLayer" mask="url(#emptyMask)">
     ${pathBg}
     ${pathMain}
     ${bodyAnim}
@@ -537,7 +556,7 @@ function buildSVG(opts) {
   <g id="cellsLayer">
     ${cells}
   </g>
-  <g id="headLayer">
+  <g id="headLayer" mask="url(#emptyMask)">
     ${head}
   </g>
 </svg>
