@@ -88,14 +88,6 @@
 
 ---
 
-## 📊 GitHub Stats
-
-<div align="center">
-
-  ![](https://github-readme-stats.vercel.app/api?username=rahulbhattsd&theme=transparent&hide_border=false&show_icons=true&hide=prs,issues,contribs)<br/>
-  ![](https://nirzak-streak-stats.vercel.app/?user=rahulbhattsd&theme=transparent&hide_border=false)
-
-</div>
 
 ---
 
