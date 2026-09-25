@@ -84,7 +84,7 @@
 
 ---
 
-## 🐍 My Contributions Snake
+## 🐍 My Contributions got eaten by Snake
 
 <div align="center">
 
